@@ -1,0 +1,14 @@
+#Install Dependencies 
+1. Install HashiCorp Terraform in VS Code > Extensions
+2. Download and run AWS CLI from https://awscli.amazonaws.com/AWSCLIV2.msi
+3. setup your aws cli with the following commands
+    export AWS_ACCESS_KEY_ID=****
+    export AWS_SECRET_ACCESS_KEY=****
+    export AWS_DEFAULT_REGION=us-east-1
+
+#Run the Code
+1. Unzip the folder and open folder from VSCode
+2. Run the following command to deploy the infra
+    terraform init
+    terraform plan
+    terraform apply
