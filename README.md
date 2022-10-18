@@ -2,7 +2,7 @@
 
 Configuration in this directory creates an Amazon RDS instance for PostgreSQL. The instance is created on an Intel Icelake instance M6i.large. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this recipe is to get you started with a database configured to run best on Intel architecture.
 
-As you configure your application's environment, choose the configurations for your infrastructure that matches your application's requirements
+As you configure your application's environment, choose the configurations for your infrastructure that matches your application's requirements.
 
 ## Usage
 
