@@ -2,29 +2,22 @@ provider "aws" {
   region = var.region
 }
 
-data "aws_availability_zones" "available" {}
-
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-
-  name                 = var.vpc_name
-  cidr                 = var.vpc_cidr
-  azs                  = data.aws_availability_zones.available.names
-  private_subnets      = var.vpc_private_subnets
-  enable_dns_hostnames = var.vpc_enable_dns_hostname
-  enable_dns_support   = var.vpc_enable_dns_support
+data "aws_subnets" "vpc_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [var.vpc_id]
+  }
 }
 
 resource "aws_db_subnet_group" "postgresql" {
   name       = var.db_subnet_group_name
-  subnet_ids = module.vpc.private_subnets
-
+  subnet_ids = data.aws_subnets.vpc_subnets.ids
   tags = var.db_subnet_group_tag
 }
 
 resource "aws_security_group" "rds" {
   name   = var.aws_security_group_name
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
 
   ingress {
     from_port   = var.ingress_from_port
@@ -65,9 +58,9 @@ resource "aws_db_instance" "postgresql" {
   engine_version         = var.aws_database_engine_version
   username               = var.aws_database_username
   password               = var.db_password
-  db_subnet_group_name   = aws_db_subnet_group.postgresql.name
-  vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.postgresql.name
   publicly_accessible    = var.aws_database_publicly_accessible
   skip_final_snapshot    = var.aws_database_skip_final_snapshot
+  db_subnet_group_name   = aws_db_subnet_group.postgresql.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
 }

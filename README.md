@@ -11,13 +11,13 @@ To run this example you need to execute:
 ```bash
 $ terraform init
 $ terraform plan
-$ terraform apply
+$ terraform apply -var="db_password=..." -var="vpc_id=..."
 ```
 
 Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
 
 ## Considerations
-- Check in the variables.tf file for the region where this database instance will be created. It is defaulted to run in ap-southeast-1 region within AWS. If you want to run it within any other region, make changes accordingly within the Terraform code
+- Check in the variables.tf file for the region where this database instance will be created. For using any other AWS region, make changes accordingly within the Terraform code
 
 - Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
 
@@ -38,7 +38,7 @@ Note that this example may create resources which cost money. Run `terraform des
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
+| <a name="module_vpc"></a> No modules used|
 
 ## Resources
 
@@ -52,6 +52,7 @@ Note that this example may create resources which cost money. Run `terraform des
 ## Inputs
 
 - Database password 
+- VPC Id
 
 ## Outputs
 
