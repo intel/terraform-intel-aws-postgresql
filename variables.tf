@@ -3,15 +3,13 @@ variable "region" {
   type = string
 
   ## Set the value of the aws region where the database will be created
-  default     = "us-west-1"
+  default     = "us-east-1"
 }
 
-variable vpc_id {
-  description = "id of the vpc"
-  type = string
-  
-  ## Set the value of the vpc id where the database will be created
-  default = "vpc-043b378a6196bbd10" 
+variable "vpc_id" {
+  description = "VPC ID within which the database resource will be created"
+  type        = string
+  default     = ""
 }
 
 variable "db_subnet_group_name" {

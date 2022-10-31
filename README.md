@@ -6,60 +6,47 @@ As you configure your application's environment, choose the configurations for y
 
 ## Usage
 
-To run this example you need to execute:
+See examples folder for code ./examples/main.tf
+
+By default, you will only have to pass one variable
 
 ```bash
-$ terraform init
-$ terraform plan
-$ terraform apply -var="db_password=..." -var="vpc_id=..."
+db_password
+```
+
+Example of main.tf
+
+```bash
+variable "db_password" {
+  description = "The admin password"
+}
+
+# Provision Intel Optimized AWS PostgreSQL server 
+module "optimized-postgresql-server" {
+  source      = "../"
+  db_password = var.db_password
+
+  # Update the vpc_id below for the VPC that this module will use. Find the vpc-id in your AWS account 
+  # from the AWS console or using CLI commands. In your AWS account, the vpc-id is represented as "vpc-",
+  # followed by a set of alphanumeric characters. One sample representation of a vpc-id is vpc-0a6734z932p20c2m4
+  vpc_id = "vpc-XXX"
+}
+```
+
+Run Terraform
+
+```bash
+terraform init  
+terraform plan -var="db_password=..." #Enter a complex password
+terraform apply -var="db_password=..." #Enter a complex password
 ```
 
 Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
+
+## Benchmarks
+TBD
 
 ## Considerations
 - Check in the variables.tf file for the region where this database instance will be created. For using any other AWS region, make changes accordingly within the Terraform code
 
 - Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
-
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-## Requirements
-
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | Latest Version |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.20 |
-
-## Modules
-
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_vpc"></a> No modules used|
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [aws_db_subnet_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group) | data source |
-| [aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | data source |
-| [aws_db_parameter_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group) | data source |
-| [aws_db_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | data source |
-
-## Inputs
-
-- Database password 
-- VPC Id
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| <a name="rds_hostname"></a> [rds_hostname](#output\_rds\_hostname) | RDS instance hostname |
-| <a name="rds_port"></a> [rds_port](#output\_rds\_port) | RDS instance port |
-| <a name="rds_username"></a> [rds_username](#output\_rds\_username) | RDS instance root username |
-
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
