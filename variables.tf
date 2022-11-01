@@ -54,8 +54,9 @@ variable "ingress_cidr_blocks" {
   description = "ingress cidr block for rds security group"
   type        = list(string)
 
-  ## Cidr block for allowed incoming connection to the database. Change it as needed before connecting to the database
-  default     = ["192.55.54.51/32"]
+  # Cidr block for allowed incoming connection to the database. The default value is open to the world. 
+  # Change it as needed before connecting to the database
+  default     = ["0.0.0.0/0"]
 }
 
 variable "egress_from_port" {
