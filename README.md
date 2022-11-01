@@ -62,7 +62,7 @@ world like 0.0.0.0/0. Before runing the code, configure it based on specific sec
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.35.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.20.0 |
 
 ## Modules
 
@@ -99,7 +99,7 @@ No modules.
 | <a name="input_egress_from_port"></a> [egress\_from\_port](#input\_egress\_from\_port) | egress from port for rds security group | `number` | `5432` | no |
 | <a name="input_egress_protocol"></a> [egress\_protocol](#input\_egress\_protocol) | egress protocol for rds security group | `string` | `"tcp"` | no |
 | <a name="input_egress_to_port"></a> [egress\_to\_port](#input\_egress\_to\_port) | egress from port for rds security group | `number` | `5432` | no |
-| <a name="input_ingress_cidr_blocks"></a> [ingress\_cidr\_blocks](#input\_ingress\_cidr\_blocks) | ingress cidr block for rds security group | `list(string)` | <pre>[<br>  "192.55.54.51/32"<br>]</pre> | no |
+| <a name="input_ingress_cidr_blocks"></a> [ingress\_cidr\_blocks](#input\_ingress\_cidr\_blocks) | ingress cidr block for rds security group | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
 | <a name="input_ingress_from_port"></a> [ingress\_from\_port](#input\_ingress\_from\_port) | ingress from port for rds security group | `number` | `5432` | no |
 | <a name="input_ingress_protocol"></a> [ingress\_protocol](#input\_ingress\_protocol) | ingress protocol for rds security group | `string` | `"tcp"` | no |
 | <a name="input_ingress_to_port"></a> [ingress\_to\_port](#input\_ingress\_to\_port) | ingress from port for rds security group | `number` | `5432` | no |
