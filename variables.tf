@@ -3,15 +3,13 @@ variable "region" {
   type = string
 
   ## Set the value of the aws region where the database will be created
-  default     = "us-west-1"
+  default     = "us-east-1"
 }
 
-variable vpc_id {
-  description = "id of the vpc"
-  type = string
-  
-  ## Set the value of the vpc id where the database will be created
-  default = "vpc-043b378a6196bbd10" 
+variable "vpc_id" {
+  description = "VPC ID within which the database resource will be created"
+  type        = string
+  default     = ""
 }
 
 variable "db_subnet_group_name" {
@@ -56,8 +54,9 @@ variable "ingress_cidr_blocks" {
   description = "ingress cidr block for rds security group"
   type        = list(string)
 
-  ## Cidr block for allowed incoming connection to the database. Change it as needed before connecting to the database
-  default     = ["192.55.54.51/32"]
+  # Cidr block for allowed incoming connection to the database. The default value is open to the world. 
+  # Change it as needed before connecting to the database
+  default     = ["0.0.0.0/0"]
 }
 
 variable "egress_from_port" {
