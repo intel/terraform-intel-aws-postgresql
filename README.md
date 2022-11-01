@@ -50,7 +50,6 @@ Note that this example may create resources which cost money. Run `terraform des
 world like 0.0.0.0/0. Before runing the code, configure it based on specific security policies and requirements within the environment it is being implemented
 
 - Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
-- Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
