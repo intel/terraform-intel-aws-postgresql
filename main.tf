@@ -3,6 +3,8 @@ locals {
   snapshot_identifier       = var.skip_final_snapshot == false ? "${var.final_snapshot_prefix}${var.rds_identifier}-${random_id.rid.id}" : ""
   db_username               = var.db_username != null ? var.db_username : (var.db_engine == "postgres" ? "pgadmin" : (var.db_engine == "mysql" ? "mysqladmin" : null))
   replication_snapshot_bool = var.db_replicate_source_db != null || var.db_snapshot_identifier != null ? true : false
+
+  restore_point_flag = compact([var.db_automated_backup_arn, var.db_snapshot_identifier, var.db_use_latest_restore_time, var.db_restore_time, var.db_source_dbi_resource_id, var.db_source_db_instance_id])
 }
 
 resource "random_id" "rid" {
@@ -101,12 +103,17 @@ resource "aws_db_instance" "rds" {
   replicate_source_db = var.db_replicate_source_db
 
   # Restore
-  restore_to_point_in_time {
-    restore_time                             = var.db_use_latest_restore_time != null ? null : var.db_restore_time
-    source_dbi_resource_id                   = var.db_source_dbi_resource_id
-    source_db_instance_identifier            = var.db_source_db_instance_id
-    use_latest_restorable_time               = var.db_use_latest_restore_time
-    source_db_instance_automated_backups_arn = var.db_automated_backup_arn
+  # Dynamic block required since non-supported databases using this block core the provider
+  dynamic "restore_to_point_in_time" {
+    for_each = length(local.restore_point_flag) >= 1 ? { "restore_point" : "" } : {}
+
+    content {
+      restore_time                             = var.db_use_latest_restore_time != null ? null : var.db_restore_time
+      source_dbi_resource_id                   = var.db_source_dbi_resource_id
+      source_db_instance_identifier            = var.db_source_db_instance_id
+      use_latest_restorable_time               = var.db_use_latest_restore_time
+      source_db_instance_automated_backups_arn = var.db_automated_backup_arn
+    }
   }
   # Tags
   tags = var.db_tags

@@ -56,7 +56,7 @@ world like 0.0.0.0/0. Before runing the code, configure it based on specific sec
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.2.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=1.3.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.36.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~>3.4.3 |
 
