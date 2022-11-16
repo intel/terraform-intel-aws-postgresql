@@ -67,6 +67,11 @@ output "db_subnet_group" {
   value       = aws_db_instance.rds.db_subnet_group_name
 }
 
+output "db_engine_version_actual" {
+  description = "Running engine version of the database (full version number)"
+  value = aws_db_instance.rds.engine_version_actual
+}
+
 ########################
 #### Authentication ####
 ########################
@@ -208,21 +213,21 @@ output "db_final_snapshot_identifier" {
 ########################
 
 output "db_restore_time" {
-  description = "value"
+  description = "The date and time to restore from."
   value       = try(aws_db_instance.rds.restore_to_point_in_time[0].restore_time, "")
 }
 
 output "db_source_dbi_resource_id" {
-  description = "value"
+  description = "The resource ID of the source DB instance from which to restore."
   value       = try(aws_db_instance.rds.restore_to_point_in_time[0].source_dbi_resource_id, "")
 }
 
 output "db_source_db_instance_id" {
-  description = "value"
+  description = "The identifier of the source DB instance from which to restore."
   value       = try(aws_db_instance.rds.restore_to_point_in_time[0].source_db_instance_identifier, "")
 }
 
 output "db_automated_backup_arn" {
-  description = "value"
+  description = "The ARN of the automated backup from which to restore."
   value       = try(aws_db_instance.rds.restore_to_point_in_time[0].source_db_instance_automated_backups_arn, "")
 }
