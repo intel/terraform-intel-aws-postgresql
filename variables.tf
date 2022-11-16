@@ -138,10 +138,18 @@ variable "instance_class" {
   default     = "db.m6i.large"
 }
 
+########################
+####    Required    ####
+########################
+
 variable "vpc_id" {
   description = "VPC ID within which the database resource will be created."
   type        = string
 }
+
+########################
+####     Other      ####
+########################
 
 variable "db_subnet_group_name" {
   description = "Database subnet group name."
