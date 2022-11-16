@@ -162,11 +162,11 @@ resource "aws_security_group" "rds" {
 
   tags = var.rds_security_group_tag
 
-  # lifecycle {
-  #   # Check that quad 0 isn't allowed inbound to the db_instance
-  #   precondition {
-  #     condition     = !contains(var.ingress_cidr_blocks,"0.0.0.0/0")
-  #     error_message = "var.ingress_cidr_blocks should not be set to [\"0.0.0.0/0\"] as this is unsafe. Please scope the range to your IP address or a subnet you own. Eg [\"184.96.249.192/32\"]."
-  #   }
-  # }
+  lifecycle {
+    # Check that quad 0 isn't allowed inbound to the db_instance
+    precondition {
+      condition     = !contains(var.ingress_cidr_blocks, "0.0.0.0/0")
+      error_message = "var.ingress_cidr_blocks should not be set to [\"0.0.0.0/0\"] as this is unsafe. Please scope the range to your IP address or a subnet you own. Eg [\"184.96.249.192/32\"]."
+    }
+  }
 }
