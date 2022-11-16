@@ -175,7 +175,7 @@ variable "db_parameter_group_name" {
 variable "db_parameter_group_family" {
   description = "Family identifier for the RDS database parameter group."
   type        = string
-  default     = "postgres13"
+  default     = "postgres14"
 }
 
 variable "aws_database_instance_identifier" {
@@ -218,7 +218,7 @@ variable "db_port" {
 variable "db_engine_version" {
   description = "Database engine version for AWS database instance."
   type        = string
-  default     = "13.7"
+  default     = "14.5"
 }
 
 variable "db_engine" {

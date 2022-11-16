@@ -7,7 +7,7 @@ module "optimized-postgresql-server" {
   source                     = "../../"
   create_security_group      = true
   rds_identifier             = "postgres-dev"
-  db_password                = ""
+  db_password                = "SuperPassword1!"
   db_allocated_storage       = 20
   db_max_allocated_storage   = 100
   db_backup_retention_period = 3
