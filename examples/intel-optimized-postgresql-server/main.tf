@@ -12,7 +12,6 @@ module "optimized-postgresql-server" {
   db_max_allocated_storage   = 100
   db_backup_retention_period = 3
   db_encryption              = true
-  db_monitoring_interval     = "30"
   db_cloudwatch_logs_export  = ["postgresql", "upgrade"]
   db_tags = {
     "database" = "test"

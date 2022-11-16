@@ -118,6 +118,12 @@ variable "security_group_ids" {
   default     = []
 }
 
+variable "db_ca_cert_identifier" {
+  type        = string
+  description = "The identifier of the CA certificate for the DB instance."
+  default     = null
+}
+
 
 ## Snapshots
 variable "skip_final_snapshot" {
@@ -495,7 +501,6 @@ variable "db_deletion_protection" {
   type        = bool
   default     = false
 }
-
 
 # Conditional Security Group
 

@@ -97,6 +97,7 @@ No modules.
 | <a name="input_db_automated_backup_arn"></a> [db\_automated\_backup\_arn](#input\_db\_automated\_backup\_arn) | The ARN of the automated backup from which to restore. Required if source\_db\_instance\_identifier or source\_dbi\_resource\_id is not specified. | `string` | `null` | no |
 | <a name="input_db_backup_retention_period"></a> [db\_backup\_retention\_period](#input\_db\_backup\_retention\_period) | The days to retain backups for. Must be between 0 and 35. Must be greater than 0 if the database is used as a source for a Read Replica. | `number` | `0` | no |
 | <a name="input_db_backup_window"></a> [db\_backup\_window](#input\_db\_backup\_window) | The daily time range (in UTC) during which automated backups are created if they are enabled. Example: `09:46-10:16.` Must not overlap with maintenance\_window. | `string` | `null` | no |
+| <a name="input_db_ca_cert_identifier"></a> [db\_ca\_cert\_identifier](#input\_db\_ca\_cert\_identifier) | The identifier of the CA certificate for the DB instance. | `string` | `null` | no |
 | <a name="input_db_cloudwatch_logs_export"></a> [db\_cloudwatch\_logs\_export](#input\_db\_cloudwatch\_logs\_export) | Set of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. | `list(string)` | `[]` | no |
 | <a name="input_db_custom_iam_profile"></a> [db\_custom\_iam\_profile](#input\_db\_custom\_iam\_profile) | (The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance. | `string` | `null` | no |
 | <a name="input_db_deletion_protection"></a> [db\_deletion\_protection](#input\_db\_deletion\_protection) | Flag that specifies whether the DB instance is protected from deletion. | `bool` | `false` | no |
@@ -159,8 +160,10 @@ No modules.
 |------|-------------|
 | <a name="output_db_allocated_storage"></a> [db\_allocated\_storage](#output\_db\_allocated\_storage) | Storage that was allocated to the instance when it configured. |
 | <a name="output_db_arn"></a> [db\_arn](#output\_db\_arn) | ARN of the database instance. |
+| <a name="output_db_automated_backup_arn"></a> [db\_automated\_backup\_arn](#output\_db\_automated\_backup\_arn) | value |
 | <a name="output_db_backup_retention"></a> [db\_backup\_retention](#output\_db\_backup\_retention) | Number of configured backups to keep for the database instance. |
 | <a name="output_db_backup_window"></a> [db\_backup\_window](#output\_db\_backup\_window) | Configured backup window for the database instance. |
+| <a name="output_db_ca_cert_identifier"></a> [db\_ca\_cert\_identifier](#output\_db\_ca\_cert\_identifier) | The identifier of the CA certificate for the DB instance. |
 | <a name="output_db_custom_iam_profile"></a> [db\_custom\_iam\_profile](#output\_db\_custom\_iam\_profile) | The instance profile associated with the underlying Amazon EC2 instance of an RDS Custom DB instance. |
 | <a name="output_db_delete_automated_backups"></a> [db\_delete\_automated\_backups](#output\_db\_delete\_automated\_backups) | Flag that specifies if automated backups are deleted. |
 | <a name="output_db_domain_iam_role"></a> [db\_domain\_iam\_role](#output\_db\_domain\_iam\_role) | The name of the IAM role to be used when making API calls to the Directory Service. |
@@ -185,8 +188,11 @@ No modules.
 | <a name="output_db_performance_insights_kms_key_id"></a> [db\_performance\_insights\_kms\_key\_id](#output\_db\_performance\_insights\_kms\_key\_id) | ARN of the KMS key that Performance Insights is utilizing (if enabled). |
 | <a name="output_db_performance_insights_retention_period"></a> [db\_performance\_insights\_retention\_period](#output\_db\_performance\_insights\_retention\_period) | Data retention period for Performance Insights (if enabled). |
 | <a name="output_db_port"></a> [db\_port](#output\_db\_port) | Database instance port. |
+| <a name="output_db_restore_time"></a> [db\_restore\_time](#output\_db\_restore\_time) | value |
 | <a name="output_db_security_group"></a> [db\_security\_group](#output\_db\_security\_group) | Security Group that was created (if specified) during the run. |
 | <a name="output_db_security_group_ids"></a> [db\_security\_group\_ids](#output\_db\_security\_group\_ids) | Security Group IDs that were associated with the database instance. |
+| <a name="output_db_source_db_instance_id"></a> [db\_source\_db\_instance\_id](#output\_db\_source\_db\_instance\_id) | value |
+| <a name="output_db_source_dbi_resource_id"></a> [db\_source\_dbi\_resource\_id](#output\_db\_source\_dbi\_resource\_id) | value |
 | <a name="output_db_status"></a> [db\_status](#output\_db\_status) | Status of the database instance that was created. |
 | <a name="output_db_storage_type"></a> [db\_storage\_type](#output\_db\_storage\_type) | Storage type that is configured on the database instance. |
 | <a name="output_db_subnet_group"></a> [db\_subnet\_group](#output\_db\_subnet\_group) | Name of the subnet group that is associated with the database instance. |

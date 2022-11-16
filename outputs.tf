@@ -169,6 +169,11 @@ output "db_kms_key_id" {
   value       = aws_db_instance.rds.kms_key_id
 }
 
+output "db_ca_cert_identifier" {
+  description = "The identifier of the CA certificate for the DB instance."
+  value       = aws_db_instance.rds.ca_cert_identifier
+}
+
 ########################
 ####     Backups    ####
 ########################
@@ -196,4 +201,28 @@ output "db_delete_automated_backups" {
 output "db_final_snapshot_identifier" {
   description = "Final snapshot identifier for the database instance."
   value       = aws_db_instance.rds.final_snapshot_identifier
+}
+
+########################
+####     Restore    ####
+########################
+
+output "db_restore_time" {
+  description = "value"
+  value       = try(aws_db_instance.rds.restore_to_point_in_time[0].restore_time, "")
+}
+
+output "db_source_dbi_resource_id" {
+  description = "value"
+  value       = try(aws_db_instance.rds.restore_to_point_in_time[0].source_dbi_resource_id, "")
+}
+
+output "db_source_db_instance_id" {
+  description = "value"
+  value       = try(aws_db_instance.rds.restore_to_point_in_time[0].source_db_instance_identifier, "")
+}
+
+output "db_automated_backup_arn" {
+  description = "value"
+  value       = try(aws_db_instance.rds.restore_to_point_in_time[0].source_db_instance_automated_backups_arn, "")
 }

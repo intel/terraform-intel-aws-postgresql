@@ -1,10 +1,19 @@
 locals {
-  security_group_ids        = var.create_security_group == false && var.security_group_ids != [""] ? var.security_group_ids : tolist([aws_security_group.rds[0].id])
-  snapshot_identifier       = var.skip_final_snapshot == false ? "${var.final_snapshot_prefix}${var.rds_identifier}-${random_id.rid.id}" : ""
-  db_username               = var.db_username != null ? var.db_username : (var.db_engine == "postgres" ? "pgadmin" : (var.db_engine == "mysql" ? "mysqladmin" : null))
+
+  # If create_security_groups is false and security_group_ids is not equal to an empty list then use the list. If those are false then use the generated security group id
+  security_group_ids = var.create_security_group == false && var.security_group_ids != [""] ? var.security_group_ids : tolist([aws_security_group.rds[0].id])
+
+  # If skip_final_snapshot is set to false then assemble a string with the prefix-rds_identifier-random_id. dec is used because b64 and id can contain characters that rds does not allow
+  snapshot_identifier = var.skip_final_snapshot == false ? "${var.final_snapshot_prefix}${var.rds_identifier}-${random_id.rid.dec}" : ""
+
+  # Determine if the db_username is set. If it is then we will use the value. If not we lookup the db_engine and supply a default for postgres. If the engine is mysql we use a different user for that if it is not equal to any then we pass a null value and error
+  db_username = var.db_username != null ? var.db_username : (var.db_engine == "postgres" ? "pgadmin" : (var.db_engine == "mysql" ? "mysqladmin" : null))
+
+  # Flag that checks the values of the variables which are overrides for some basic values when replication is in use. If they are set then those values are used in the RDS resource
   replication_snapshot_bool = var.db_replicate_source_db != null || var.db_snapshot_identifier != null ? true : false
 
-  restore_point_flag = compact([var.db_automated_backup_arn, var.db_snapshot_identifier, var.db_use_latest_restore_time, var.db_restore_time, var.db_source_dbi_resource_id, var.db_source_db_instance_id])
+  # Determine if the db_engine is set to mysql. If false then created a list of all the backup strings, if true then create an empty list. This list is referenced to determine the length which acts like a flag for the dynamic block
+  restore_point_flag = var.db_engine != "mysql" ? compact([var.db_automated_backup_arn, var.db_use_latest_restore_time, var.db_restore_time, var.db_source_dbi_resource_id, var.db_source_db_instance_id]) : []
 }
 
 resource "random_id" "rid" {
@@ -56,6 +65,7 @@ resource "aws_db_instance" "rds" {
   option_group_name    = var.db_option_group
   availability_zone    = var.availability_zone
   multi_az             = var.multi_az
+  ca_cert_identifier   = var.db_ca_cert_identifier
 
   # Networking
   publicly_accessible    = var.db_publicly_accessible
@@ -148,4 +158,12 @@ resource "aws_security_group" "rds" {
   }
 
   tags = var.rds_security_group_tag
+
+  # lifecycle {
+  #   # Check that quad 0 isn't allowed inbound to the db_instance
+  #   precondition {
+  #     condition     = !contains(var.ingress_cidr_blocks,"0.0.0.0/0")
+  #     error_message = "var.ingress_cidr_blocks should not be set to [\"0.0.0.0/0\"] as this is unsafe. Please scope the range to your IP address or a subnet you own. Eg [\"184.96.249.192/32\"]."
+  #   }
+  # }
 }
