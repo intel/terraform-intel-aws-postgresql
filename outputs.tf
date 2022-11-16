@@ -69,7 +69,7 @@ output "db_subnet_group" {
 
 output "db_engine_version_actual" {
   description = "Running engine version of the database (full version number)"
-  value = aws_db_instance.rds.engine_version_actual
+  value       = aws_db_instance.rds.engine_version_actual
 }
 
 ########################

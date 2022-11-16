@@ -2,6 +2,141 @@
 # see more: https://aws.amazon.com/rds/mysql/pricing/?nc=sn&loc=4
 # The 6th generation of Amazon EC2 x86-based General Purpose compute instances are designed to provide a balance of compute, memory, storage, and network resources.
 
+########################
+####     Intel      ####
+########################
+
+variable "db_parameters" {
+  type = object({
+    postgres = optional(object({
+      temp_buffers = optional(object({
+        value        = optional(string, 4096 * 1024 / 8)
+        apply_method = optional(string, "immediate")
+      }))
+      work_mem = optional(object({
+        value        = optional(string, 4096 * 1024)
+        apply_method = optional(string, "immediate")
+      }))
+      maintenance_work_mem = optional(object({
+        value        = optional(string, 512 * 1024)
+        apply_method = optional(string, "immediate")
+      }))
+      autovacuum_work_mem = optional(object({
+        value        = optional(string, "-1")
+        apply_method = optional(string, "immediate")
+      }))
+      max_stack_depth = optional(object({
+        value        = optional(string, 7 * 1024)
+        apply_method = optional(string, "immediate")
+      }))
+      effective_io_concurrency = optional(object({
+        value        = optional(string, "32")
+        apply_method = optional(string, "immediate")
+      }))
+      synchronous_commit = optional(object({
+        value        = optional(string, "off")
+        apply_method = optional(string, "immediate")
+      }))
+      min_wal_size = optional(object({
+        value        = optional(string, "256")
+        apply_method = optional(string, "immediate")
+      }))
+      max_wal_size = optional(object({
+        value        = optional(string, "512")
+        apply_method = optional(string, "immediate")
+      }))
+      checkpoint_warning = optional(object({
+        value        = optional(string, 1 * 60 * 60)
+        apply_method = optional(string, "immediate")
+      }))
+      random_page_cost = optional(object({
+        value        = optional(string, "1.1")
+        apply_method = optional(string, "immediate")
+      }))
+      cpu_tuple_cost = optional(object({
+        value        = optional(string, "0.03")
+        apply_method = optional(string, "immediate")
+      }))
+      effective_cache_size = optional(object({
+        value        = optional(string, 350 * 1024 * 1024 / 8)
+        apply_method = optional(string, "immediate")
+      }))
+      autovacuum = optional(object({
+        value        = optional(string, "1")
+        apply_method = optional(string, "immediate")
+      }))
+      autovacuum_vacuum_cost_limit = optional(object({
+        value        = optional(string, "3000")
+        apply_method = optional(string, "immediate")
+      }))
+      vacuum_freeze_min_age = optional(object({
+        value        = optional(string, "10000000")
+        apply_method = optional(string, "immediate")
+      }))
+      max_connections = optional(object({
+        value        = optional(string, "256")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      huge_pages = optional(object({
+        value        = optional(string, "on")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      shared_buffers = optional(object({
+        value        = optional(string, "{DBInstanceClassMemory*3/32768}")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      max_files_per_process = optional(object({
+        value        = optional(string, "4000")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      max_worker_processes = optional(object({
+        value        = optional(string, "{DBInstanceVCPU}")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      wal_buffers = optional(object({
+        value        = optional(string, "-1")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      max_wal_senders = optional(object({
+        value        = optional(string, "5")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      timezone = optional(object({
+        value        = optional(string, "UTC")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      max_locks_per_transaction = optional(object({
+        value        = optional(string, "64")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      max_pred_locks_per_transaction = optional(object({
+        value        = optional(string, "64")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      checkpoint_completion_target = optional(object({
+        value        = optional(string, "0.9")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      autovacuum_max_workers = optional(object({
+        value        = optional(string, "10")
+        apply_method = optional(string, "pending-reboot")
+      }))
+      autovacuum_freeze_max_age = optional(object({
+        value        = optional(string, "750000000")
+        apply_method = optional(string, "pending-reboot")
+      }))
+    }))
+  })
+  default = {
+    postgres = {}
+  }
+}
+
+variable "instance_class" {
+  type        = string
+  description = "Instance class that will be used by the RDS instance."
+  default     = "db.m6i.large"
+}
 
 variable "vpc_id" {
   description = "VPC ID within which the database resource will be created."
@@ -43,11 +178,7 @@ variable "aws_database_instance_identifier" {
 
 ## General
 
-variable "instance_class" {
-  type        = string
-  description = "Instance class that will be used by the RDS instance."
-  default     = "db.m6i.large"
-}
+
 
 variable "db_name" {
   description = "Name of the database that will be created on the RDS instance. If this is specified then a database will be created as a part of the instance provisioning process."
@@ -85,7 +216,11 @@ variable "db_engine_version" {
 variable "db_engine" {
   description = "Database engine version for AWS database instance."
   type        = string
-  default     = "postgres"
+  validation {
+    condition     = contains(["postgres"], var.db_engine)
+    error_message = "The db_engine must be \"postgres\"."
+  }
+  default = "postgres"
 }
 
 variable "db_option_group" {
@@ -262,135 +397,6 @@ variable "db_performance_retention_period" {
   description = "Amount of time in days to retain Performance Insights data.Valid values are 7, 731 (2 years) or a multiple of 31."
   type        = string
   default     = null
-}
-
-
-## Parameters
-
-variable "db_parameters" {
-  type = object({
-    postgres = optional(object({
-      temp_buffers = optional(object({
-        value        = optional(string, 4096 * 1024 / 8)
-        apply_method = optional(string, "immediate")
-      }))
-      work_mem = optional(object({
-        value        = optional(string, 4096 * 1024)
-        apply_method = optional(string, "immediate")
-      }))
-      maintenance_work_mem = optional(object({
-        value        = optional(string, 512 * 1024)
-        apply_method = optional(string, "immediate")
-      }))
-      autovacuum_work_mem = optional(object({
-        value        = optional(string, "-1")
-        apply_method = optional(string, "immediate")
-      }))
-      max_stack_depth = optional(object({
-        value        = optional(string, 7 * 1024)
-        apply_method = optional(string, "immediate")
-      }))
-      effective_io_concurrency = optional(object({
-        value        = optional(string, "32")
-        apply_method = optional(string, "immediate")
-      }))
-      synchronous_commit = optional(object({
-        value        = optional(string, "off")
-        apply_method = optional(string, "immediate")
-      }))
-      min_wal_size = optional(object({
-        value        = optional(string, "256")
-        apply_method = optional(string, "immediate")
-      }))
-      max_wal_size = optional(object({
-        value        = optional(string, "512")
-        apply_method = optional(string, "immediate")
-      }))
-      checkpoint_warning = optional(object({
-        value        = optional(string, 1 * 60 * 60)
-        apply_method = optional(string, "immediate")
-      }))
-      random_page_cost = optional(object({
-        value        = optional(string, "1.1")
-        apply_method = optional(string, "immediate")
-      }))
-      cpu_tuple_cost = optional(object({
-        value        = optional(string, "0.03")
-        apply_method = optional(string, "immediate")
-      }))
-      effective_cache_size = optional(object({
-        value        = optional(string, 350 * 1024 * 1024 / 8)
-        apply_method = optional(string, "immediate")
-      }))
-      autovacuum = optional(object({
-        value        = optional(string, "1")
-        apply_method = optional(string, "immediate")
-      }))
-      autovacuum_vacuum_cost_limit = optional(object({
-        value        = optional(string, "3000")
-        apply_method = optional(string, "immediate")
-      }))
-      vacuum_freeze_min_age = optional(object({
-        value        = optional(string, "10000000")
-        apply_method = optional(string, "immediate")
-      }))
-      max_connections = optional(object({
-        value        = optional(string, "256")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      huge_pages = optional(object({
-        value        = optional(string, "on")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      shared_buffers = optional(object({
-        value        = optional(string, "{DBInstanceClassMemory*3/32768}")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      max_files_per_process = optional(object({
-        value        = optional(string, "4000")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      max_worker_processes = optional(object({
-        value        = optional(string, "{DBInstanceVCPU}")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      wal_buffers = optional(object({
-        value        = optional(string, "-1")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      max_wal_senders = optional(object({
-        value        = optional(string, "5")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      timezone = optional(object({
-        value        = optional(string, "UTC")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      max_locks_per_transaction = optional(object({
-        value        = optional(string, "64")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      max_pred_locks_per_transaction = optional(object({
-        value        = optional(string, "64")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      checkpoint_completion_target = optional(object({
-        value        = optional(string, "0.9")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      autovacuum_max_workers = optional(object({
-        value        = optional(string, "10")
-        apply_method = optional(string, "pending-reboot")
-      }))
-      autovacuum_freeze_max_age = optional(object({
-        value        = optional(string, "750000000")
-        apply_method = optional(string, "pending-reboot")
-      }))
-    }))
-  })
-  default = {
-    postgres = {}
-  }
 }
 
 

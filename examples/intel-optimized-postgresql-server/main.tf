@@ -21,7 +21,7 @@ module "optimized-postgresql-server" {
     postgres = {
       autovacuum = {
         apply_method = "immediate"
-        value        = "0"
+        value        = "1"
       }
     }
   }
