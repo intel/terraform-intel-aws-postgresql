@@ -1,7 +1,7 @@
 # Environment variables can also be used https://www.terraform.io/language/values/variables#environment-variables
 
 # Provision Intel Optimized AWS PostgreSQL server
-module "optimized-postgresql-server" {
+module "optimized-postgres-server" {
   source                     = "../../"
   create_security_group      = true
   rds_identifier             = "postgres-dev"
