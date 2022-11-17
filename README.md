@@ -13,7 +13,7 @@ The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https:/
 
 ## Usage
 
-See examples folder for code ./examples/main.tf
+See examples folder for code ./examples/intel-optimized-postgresql-server/main.tf
 
 
 Example of main.tf
