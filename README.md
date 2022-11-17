@@ -15,12 +15,6 @@ The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https:/
 
 See examples folder for code ./examples/main.tf
 
-By default, you will only have to pass one variable
-
-```hcl
-db_password
-
-```
 
 Example of main.tf
 
