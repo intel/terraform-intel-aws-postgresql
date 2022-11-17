@@ -1,8 +1,15 @@
-# Amazon RDS PostgreSQL (PaaS) - Intel Cloud Optimized Recipe
+<p align="center">
+  <img src="./images/logo-classicblue-800px.png" alt="Intel Logo" width="250"/>
+</p>
 
-Configuration in this directory creates an Amazon RDS instance for PostgreSQL. The instance is created on an Intel Icelake instance M6i.large by default. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this recipe is to get you started with a database configured to run best on Intel architecture.
+# Intel Cloud Optimization Modules for Terraform
 
-As you configure your application's environment, choose the configurations for your infrastructure that matches your application's requirements.
+## Amazon RDS PostgreSQL module
+
+This module can be used to deploy an Intel optimized Amazon RDS PostgreSQL Server database instance. 
+Instance selection and PostgreSQL optimization are included by default in the code.
+
+The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https://www.intel.com/content/www/us/en/developer/articles/guide/open-source-database-tuning-guide-on-xeon-systems.html>)
 
 ## Usage
 
@@ -10,44 +17,63 @@ See examples folder for code ./examples/main.tf
 
 By default, you will only have to pass one variable
 
-```bash
+```hcl
 db_password
+
 ```
 
 Example of main.tf
 
-```bash
-variable "db_password" {
-  description = "The admin password"
-}
+```hcl
+# Example of how to pass variable for database password:
+# terraform apply -var="db_password=..."
+# Environment variables can also be used https://www.terraform.io/language/values/variables#environment-variables
 
-# Provision Intel Optimized AWS PostgreSQL server 
+# Provision Intel Optimized AWS PostgreSQL server
 module "optimized-postgresql-server" {
-  source      = "github.com/OTCShare2/terraform-intel-aws-postgresql"
-  db_password = var.db_password
+  source                     = "../../"
+  create_security_group      = true
+  rds_identifier             = "postgres-dev"
+  db_password                = "SuperPassword1!"
+  db_allocated_storage       = 20
+  db_max_allocated_storage   = 100
+  db_backup_retention_period = 3
+  db_encryption              = true
+  db_cloudwatch_logs_export  = ["postgresql", "upgrade"]
+  db_tags = {
+    "database" = "test"
+  }
 
-  # Update the vpc_id below for the VPC that this module will use. Find the vpc-id in your AWS account 
+  db_parameters = {
+    postgres = {
+      autovacuum = {
+        apply_method = "immediate"
+        value        = "1"
+      }
+    }
+  }
+  # Update the vpc_id below for the VPC that this module will use. Find the vpc-id in your AWS account
   # from the AWS console or using CLI commands. In your AWS account, the vpc-id is represented as "vpc-",
   # followed by a set of alphanumeric characters. One sample representation of a vpc-id is vpc-0a6734z932p20c2m4
-  vpc_id = "vpc-XXX"
+  vpc_id = "vpc-0a6734z932p20c2m4"
 }
+
 ```
 
 Run Terraform
 
-```bash
+```hcl
 terraform init  
-terraform plan -var="db_password=..." #Enter a complex password
-terraform apply -var="db_password=..." #Enter a complex password
+terraform plan
+terraform apply
+
+
 ```
 
 Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
 
 ## Considerations
 - Check in the variables.tf file for the region where this database instance will be created. For using any other AWS region, make changes accordingly within the Terraform code
-
-- Check the variables.tf file for incoming ports allowed to connect to the database instance. The variable name is ingress_cidr_blocks. Currently it is defaulted to be open to the
-world like 0.0.0.0/0. Before runing the code, configure it based on specific security policies and requirements within the environment it is being implemented
 
 - Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
 

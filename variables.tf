@@ -554,7 +554,7 @@ variable "ingress_cidr_blocks" {
 
   # CIDR block for allowed incoming connection to the database. The default value is open to the world.
   # Change it as needed before connecting to the database
-  default = ["0.0.0.0/0"]
+  default = ["192.168.192.100/32"]
 }
 
 variable "egress_from_port" {
