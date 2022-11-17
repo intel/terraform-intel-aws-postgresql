@@ -108,7 +108,7 @@ resource "aws_db_instance" "rds" {
   monitoring_interval                   = var.db_monitoring_interval
   monitoring_role_arn                   = var.db_monitoring_role_arn
   performance_insights_enabled          = var.db_performance_insights
-  performance_insights_kms_key_id       = var.db_performance_insights ? var.db_performance_retention_period : null
+  performance_insights_kms_key_id       = var.db_performance_insights ? var.db_performance_insights_kms_key_id : null
   performance_insights_retention_period = var.db_performance_insights ? var.db_performance_retention_period : null
   enabled_cloudwatch_logs_exports       = var.db_cloudwatch_logs_export
 

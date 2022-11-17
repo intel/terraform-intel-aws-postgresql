@@ -165,7 +165,6 @@ variable "db_subnet_group_tag" {
   }
 }
 
-
 variable "db_parameter_group_name" {
   description = "Name for the RDS database parameter group."
   type        = string
@@ -183,10 +182,6 @@ variable "aws_database_instance_identifier" {
   type        = string
   default     = "postgresql"
 }
-
-## General
-
-
 
 variable "db_name" {
   description = "Name of the database that will be created on the RDS instance. If this is specified then a database will be created as a part of the instance provisioning process."
@@ -287,10 +282,6 @@ variable "rds_identifier" {
   description = "Name of the RDS instance that will be created."
   type        = string
 }
-
-
-
-
 
 ## Storage
 variable "db_storage_type" {
