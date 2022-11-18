@@ -1,0 +1,54 @@
+fail_fast: false
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.3.0
+  hooks:
+    - id: check-added-large-files
+      args: [--maxkb=1024]
+    - id: trailing-whitespace
+      args: [--markdown-linebreak-ext=md]
+    - id: detect-private-key
+    - id: check-merge-conflict
+    - id: check-case-conflict
+    - id: check-executables-have-shebangs
+    - id: check-shebang-scripts-are-executable
+    - id: check-symlinks
+    - id: pretty-format-json
+      args:
+        - --autofix
+    - id: destroyed-symlinks
+    - id: end-of-file-fixer
+    - id: check-json
+    - id: check-toml
+    - id: check-yaml
+      args: [--allow-multiple-documents]
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.76.0
+  hooks:
+    - id: terraform_fmt
+      name: Format Terraform Configuration
+    - id: terraform_validate
+      name: Validate Terraform Configuration
+      args:
+        - --envs=VAULT_ADDR="" # For local checks
+    - id: tfupdate
+      name: Autoupdate Terraform versions
+      args:
+        - --args=terraform
+        - --args=--version >=1.2.0
+    - id: terraform_tflint
+    - id: terraform_docs
+      name: Generate Terraform README files
+      args:
+        - --hook-config=--path-to-file=README.md
+        - --hook-config=--add-to-existing-file=true
+        - --hook-config=--create-file-if-not-exist=true
+- repo: https://github.com/syntaqx/git-hooks
+  rev: v0.0.17
+  hooks:
+    - id: shfmt
+      name: Check shell style with shfmt
+    - id: shellcheck
+      name: Shell scripts conform to shellcheck
+    - id: forbid-binary
+      name: Forbids binaries being committed
