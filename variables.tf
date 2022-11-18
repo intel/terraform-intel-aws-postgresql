@@ -191,12 +191,14 @@ variable "db_name" {
 
 variable "db_username" {
   description = "Username for the master database user."
+  type        = string
   sensitive   = false
   default     = null
 }
 
 variable "db_password" {
   description = "Password for the master database user."
+  type        = string
   sensitive   = true
   validation {
     condition     = length(var.db_password) >= 8
@@ -508,12 +510,6 @@ variable "db_deletion_protection" {
 }
 
 # Conditional Security Group
-
-variable "security_group_name" {
-  description = "Security group name for the RDS instance that will be created."
-  type        = string
-  default     = "postgresql_rds"
-}
 
 variable "aws_security_group_name" {
   description = "security group name for the rds"

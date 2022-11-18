@@ -35,7 +35,7 @@ repos:
       name: Autoupdate Terraform versions
       args:
         - --args=terraform
-        - --args=--version >=1.2.0
+        - --args=--version >=1.3.0
     - id: terraform_tflint
     - id: terraform_docs
       name: Generate Terraform README files

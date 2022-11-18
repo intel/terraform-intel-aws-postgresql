@@ -16,7 +16,7 @@ locals {
   restore_point_flag = var.db_engine != "mysql" ? compact([var.db_automated_backup_arn, var.db_use_latest_restore_time, var.db_restore_time, var.db_source_dbi_resource_id, var.db_source_db_instance_id]) : []
 
   # TODO create a local that evaluates the version of postgres that was specified and only keeps the first 2 digits of the version and appends it to the db_engine. Add conditional logic to do the same for mysql but mysql requires x.x versioning
-  db_parameter_group_family = var.db_engine == "postgres" ? "${var.db_engine}${substr(var.db_engine_version, 0, 2)}" : var.db_engine
+  # db_parameter_group_family = var.db_engine == "postgres" ? "${var.db_engine}${substr(var.db_engine_version, 0, 2)}" : var.db_engine
 }
 
 resource "random_id" "rid" {
