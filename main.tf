@@ -1,5 +1,8 @@
 locals {
 
+  # Evaluates if a parameter wasn't supplied in the input map (someone didn't want to use it) and returns only the objects that have been configured
+  db_parameters = { for parameter, value in lookup(var.db_parameters, var.db_engine, {}) : parameter => value if value != null /* object */ }
+
   # If create_security_groups is false and security_group_ids is not equal to an empty list then use the list. If those are false then use the generated security group id
   security_group_ids = var.create_security_group == false && var.security_group_ids != [""] ? var.security_group_ids : tolist([aws_security_group.rds[0].id])
 
@@ -41,7 +44,7 @@ resource "aws_db_parameter_group" "rds" {
   family = var.db_parameter_group_family
 
   dynamic "parameter" {
-    for_each = lookup(var.db_parameters, var.db_engine, {})
+    for_each = local.db_parameters
     content {
       name         = parameter.key
       value        = parameter.value.value

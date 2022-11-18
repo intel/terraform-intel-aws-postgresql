@@ -128,7 +128,37 @@ variable "db_parameters" {
     }))
   })
   default = {
-    postgres = {}
+    postgres = {
+      autovacuum                     = {}
+      autovacuum_freeze_max_age      = {}
+      autovacuum_max_workers         = {}
+      autovacuum_vacuum_cost_limit   = {}
+      autovacuum_work_mem            = {}
+      checkpoint_completion_target   = {}
+      checkpoint_warning             = {}
+      cpu_tuple_cost                 = {}
+      effective_cache_size           = {}
+      effective_io_concurrency       = {}
+      huge_pages                     = {}
+      maintenance_work_mem           = {}
+      max_connections                = {}
+      max_files_per_process          = {}
+      max_locks_per_transaction      = {}
+      max_pred_locks_per_transaction = {}
+      max_stack_depth                = {}
+      max_wal_senders                = {}
+      max_wal_size                   = {}
+      max_worker_processes           = {}
+      min_wal_size                   = {}
+      random_page_cost               = {}
+      shared_buffers                 = {}
+      synchronous_commit             = {}
+      temp_buffers                   = {}
+      timezone                       = {}
+      vacuum_freeze_min_age          = {}
+      wal_buffers                    = {}
+      work_mem                       = {}
+    }
   }
 }
 
@@ -243,7 +273,7 @@ variable "availability_zone" {
 variable "multi_az" {
   description = "Flag that specifies if the RDS instance is multi_az."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "db_tags" {
@@ -299,19 +329,19 @@ variable "db_storage_type" {
 variable "db_allocated_storage" {
   description = "Allocated storage for AWS database instance."
   type        = number
-  default     = null
+  default     = 400
 }
 
 variable "db_max_allocated_storage" {
   description = "When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling."
   type        = number
-  default     = null
+  default     = 1000
 }
 
 variable "db_iops" {
   description = "The amount of provisioned IOPS. Setting this implies a storage_type of io1."
   type        = number
-  default     = 0
+  default     = 10000
 }
 
 ## Upgrades
