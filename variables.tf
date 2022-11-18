@@ -323,19 +323,19 @@ variable "db_storage_type" {
     condition     = contains(["standard", "gp2", "io1"], var.db_storage_type)
     error_message = "The db_storage_type must be one of the following: \"standard\", \"gp2\", \"io1\"."
   }
-  default = "gp2"
+  default = "io1"
 }
 
 variable "db_allocated_storage" {
   description = "Allocated storage for AWS database instance."
   type        = number
-  default     = 400
+  default     = 100
 }
 
 variable "db_max_allocated_storage" {
   description = "When configured, the upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to allocated_storage. Must be greater than or equal to allocated_storage or 0 to disable Storage Autoscaling."
   type        = number
-  default     = 1000
+  default     = 10000
 }
 
 variable "db_iops" {
