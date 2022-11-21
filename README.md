@@ -2,9 +2,11 @@
   <img src="./images/logo-classicblue-800px.png" alt="Intel Logo" width="250"/>
 </p>
 
-# Intel Cloud Optimization Modules for Terraform
+# Intel® Cloud Optimization Modules for Terraform
 
-## Amazon RDS PostgreSQL module
+© Copyright 2022, Intel Corporation
+
+## AWS RDS PostgreSQL module
 
 This module can be used to deploy an Intel optimized Amazon RDS PostgreSQL Server database instance.
 Instance selection and PostgreSQL optimization are included by default in the code.
@@ -19,37 +21,19 @@ See examples folder for code ./examples/intel-optimized-postgresql-server/main.t
 Example of main.tf
 
 ```hcl
-# Example of how to pass variable for database password:
-# terraform apply -var="db_password=..."
-# Environment variables can also be used https://www.terraform.io/language/values/variables#environment-variables
+db_password
+vpc_id
+```
 
-# Provision Intel Optimized AWS PostgreSQL server
+Example of main.tf
+
+```hcl
+# main.tf
+
 module "optimized-postgresql-server" {
-  source                     = "../../"
-  create_security_group      = true
-  rds_identifier             = "postgres-dev"
-  db_password                = "SuperPassword1!"
-  db_allocated_storage       = 20
-  db_max_allocated_storage   = 100
-  db_backup_retention_period = 3
-  db_encryption              = true
-  db_cloudwatch_logs_export  = ["postgresql", "upgrade"]
-  db_tags = {
-    "database" = "test"
-  }
-
-  db_parameters = {
-    postgres = {
-      autovacuum = {
-        apply_method = "immediate"
-        value        = "1"
-      }
-    }
-  }
-  # Update the vpc_id below for the VPC that this module will use. Find the vpc-id in your AWS account
-  # from the AWS console or using CLI commands. In your AWS account, the vpc-id is represented as "vpc-",
-  # followed by a set of alphanumeric characters. One sample representation of a vpc-id is vpc-0a6734z932p20c2m4
-  vpc_id = "vpc-0a6734z932p20c2m4"
+  source      = "github.com/intel/terraform-intel-aws-postgresql"
+  db_password = var.db_password 
+  vpc_id      = "<ENTER_VPC_ID_HERE>"
 }
 
 ```
@@ -57,14 +41,14 @@ module "optimized-postgresql-server" {
 Run Terraform
 
 ```hcl
+export TF_VAR_db_password ='<USE_A_STRONG_PASSWORD>'
+
 terraform init  
 terraform plan
-terraform apply
-
-
+terraform apply 
 ```
 
-Note that this example may create resources which cost money. Run `terraform destroy` when you don't need these resources.
+Note that this example may create resources. Run `terraform destroy` when you don't need these resources.
 
 ## Considerations
 - Check in the variables.tf file for the region where this database instance will be created. For using any other AWS region, make changes accordingly within the Terraform code
