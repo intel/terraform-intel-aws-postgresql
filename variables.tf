@@ -2,10 +2,14 @@
 ####     Intel      ####
 ########################
 
-# We recommend  Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake)
+# See policies.md, we recommend  Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake)
 # General Purpose: db.m6i.large, db.m6i.xlarge, db.m6i.2xlarge, db.m6i.4xlarge, db.m6i.8xlarge, db.m6i.12xlarge, db.m6i.16xlarge, db.m6i.24xlarge, db.m6i.32xlarge
 # Memory Optimized: db.r6i.large, db.r6i.xlarge, db.r6i.2xlarge, db.r6i.4xlarge, db.r6i.8xlarge, db.r6i.12xlarge, db.r6i.16xlarge, db.r6i.24xlarge, db.r6i.32xlarge
-# See more: https://aws.amazon.com/ec2/instance-types/m6i/  https://aws.amazon.com/rds/mysql/pricing/?nc=sn&loc=4
+# See more: 
+# https://aws.amazon.com/ec2/instance-types/m6i/ 
+# https://aws.amazon.com/ec2/instance-types/r6i/  
+# https://aws.amazon.com/rds/postgresql/pricing/
+
 variable "instance_class" {
   type        = string
   description = "Instance class that will be used by the RDS instance."
@@ -523,7 +527,7 @@ variable "db_backup_retention_period" {
     condition     = var.db_backup_retention_period >= 0 && var.db_backup_retention_period <= 35
     error_message = "The db_backup_retention_period must be between 0 and 35."
   }
-  default = 0
+  default = 7
 }
 
 variable "db_backup_window" {
