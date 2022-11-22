@@ -160,6 +160,7 @@ variable "db_parameters" {
       work_mem                       = {}
     }
   }
+  description = "Intel Cloud optimizations for Xeon processors"
 }
 
 variable "instance_class" {
