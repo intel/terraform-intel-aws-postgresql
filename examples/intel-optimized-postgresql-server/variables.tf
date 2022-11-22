@@ -1,7 +1,7 @@
 variable "region" {
   description = "Target AWS region to deploy workloads in."
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-1"
 }
 
 variable "db_password" {
@@ -9,3 +9,4 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
