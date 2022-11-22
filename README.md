@@ -63,6 +63,3 @@ Note that this example may create resources. Run `terraform destroy` when you do
 - Check in the variables.tf file for the region where this database instance will be created. For using any other AWS region, make changes accordingly within the Terraform code
 
 - Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
-
-<!-- BEGIN_TF_DOCS -->
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
