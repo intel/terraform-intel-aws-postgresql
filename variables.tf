@@ -192,6 +192,11 @@ variable "db_password" {
   }
 }
 
+variable "rds_identifier" {
+  description = "Name of the RDS instance that will be created."
+  type        = string
+}
+
 ########################
 ####     Other      ####
 ########################
@@ -311,13 +316,6 @@ variable "final_snapshot_prefix" {
   description = "The name which is prefixed to the final snapshot on database termination."
   type        = string
   default     = "pgsql-snap-"
-}
-
-## DB Names
-
-variable "rds_identifier" {
-  description = "Name of the RDS instance that will be created."
-  type        = string
 }
 
 ## Storage
@@ -612,5 +610,11 @@ variable "rds_security_group_tag" {
 variable "create_security_group" {
   type        = bool
   description = "Flag that allows for the creation of a security group that allows access to the instance. Please use this for non-production use cases only."
+  default     = false
+}
+
+variable "create_subnet_group" {
+  type        = bool
+  description = "Flag that allows for the creation of a subnet group that allows public access."
   default     = false
 }
