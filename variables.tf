@@ -301,7 +301,7 @@ variable "db_tags" {
 variable "security_group_ids" {
   type        = list(string)
   description = "List of existing AWS security groups that will be attached to the RDS instance."
-  default     = []
+  default     = null
 }
 
 variable "db_ca_cert_identifier" {
