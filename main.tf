@@ -65,7 +65,7 @@ resource "aws_db_instance" "rds" {
   # General
   db_name              = var.db_name
   engine               = local.replication_snapshot_bool ? null : var.db_engine
-  engine_version       = var.db_engine_version
+  engine_version       = local.replication_snapshot_bool ? null : var.db_engine_version
   username             = local.replication_snapshot_bool ? null : local.db_username
   password             = local.replication_snapshot_bool ? null : var.db_password
   parameter_group_name = aws_db_parameter_group.rds.name
