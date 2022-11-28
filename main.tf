@@ -34,13 +34,14 @@ data "aws_subnets" "vpc_subnets" {
 }
 
 resource "aws_db_subnet_group" "rds" {
+  count      = var.create_subnet_group != false ? 1 : 0
   name       = var.db_subnet_group_name
   subnet_ids = data.aws_subnets.vpc_subnets.ids
   tags       = var.db_subnet_group_tag
 }
 
 resource "aws_db_parameter_group" "rds" {
-  name   = var.db_parameter_group_name
+  name   = "${var.db_parameter_group_name}-${random_id.rid.dec}"
   family = var.db_parameter_group_family
 
   dynamic "parameter" {
@@ -75,7 +76,7 @@ resource "aws_db_instance" "rds" {
 
   # Networking
   publicly_accessible    = var.db_publicly_accessible
-  db_subnet_group_name   = aws_db_subnet_group.rds.name
+  db_subnet_group_name   = var.create_subnet_group != false ? aws_db_subnet_group.rds[0].name : null
   vpc_security_group_ids = local.security_group_ids
   port                   = var.db_port
 

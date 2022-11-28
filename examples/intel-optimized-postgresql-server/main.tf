@@ -1,4 +1,3 @@
-# Environment variables can also be used https://www.terraform.io/language/values/variables#environment-variables
 
 # Provision Intel Optimized AWS PostgreSQL server
 module "optimized-postgres-server" {

@@ -1,10 +1,20 @@
-# we recommend memory optimized instances - db.m6i.large, db.m6i.xlarge, db.m6i.2xlarge, db.m6i.4xlarge, db.m6i.8xlarge, db.m6i.12xlarge, db.m6i.16xlarge, db.m6i.24xlarge, db.m6i.32xlarge
-# see more: https://aws.amazon.com/rds/mysql/pricing/?nc=sn&loc=4
-# The 6th generation of Amazon EC2 x86-based General Purpose compute instances are designed to provide a balance of compute, memory, storage, and network resources.
-
 ########################
 ####     Intel      ####
 ########################
+
+# See policies.md, we recommend  Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake)
+# General Purpose: db.m6i.large, db.m6i.xlarge, db.m6i.2xlarge, db.m6i.4xlarge, db.m6i.8xlarge, db.m6i.12xlarge, db.m6i.16xlarge, db.m6i.24xlarge, db.m6i.32xlarge
+# Memory Optimized: db.r6i.large, db.r6i.xlarge, db.r6i.2xlarge, db.r6i.4xlarge, db.r6i.8xlarge, db.r6i.12xlarge, db.r6i.16xlarge, db.r6i.24xlarge, db.r6i.32xlarge
+# See more: 
+# https://aws.amazon.com/ec2/instance-types/m6i/ 
+# https://aws.amazon.com/ec2/instance-types/r6i/  
+# https://aws.amazon.com/rds/postgresql/pricing/
+
+variable "instance_class" {
+  type        = string
+  description = "Instance class that will be used by the RDS instance."
+  default     = "db.m6i.2xlarge"
+}
 
 variable "db_parameters" {
   type = object({
@@ -163,18 +173,27 @@ variable "db_parameters" {
   description = "Intel Cloud optimizations for Xeon processors"
 }
 
-variable "instance_class" {
-  type        = string
-  description = "Instance class that will be used by the RDS instance."
-  default     = "db.m6i.large"
-}
-
 ########################
 ####    Required    ####
 ########################
 
 variable "vpc_id" {
   description = "VPC ID within which the database resource will be created."
+  type        = string
+}
+
+variable "db_password" {
+  description = "Password for the master database user."
+  type        = string
+  sensitive   = true
+  validation {
+    condition     = length(var.db_password) >= 8
+    error_message = "The db_password value must be at least 8 characters in length."
+  }
+}
+
+variable "rds_identifier" {
+  description = "Name of the RDS instance that will be created."
   type        = string
 }
 
@@ -225,16 +244,6 @@ variable "db_username" {
   type        = string
   sensitive   = false
   default     = null
-}
-
-variable "db_password" {
-  description = "Password for the master database user."
-  type        = string
-  sensitive   = true
-  validation {
-    condition     = length(var.db_password) >= 8
-    error_message = "The db_password value must be at least 8 characters in length."
-  }
 }
 
 variable "db_port" {
@@ -307,13 +316,6 @@ variable "final_snapshot_prefix" {
   description = "The name which is prefixed to the final snapshot on database termination."
   type        = string
   default     = "pgsql-snap-"
-}
-
-## DB Names
-
-variable "rds_identifier" {
-  description = "Name of the RDS instance that will be created."
-  type        = string
 }
 
 ## Storage
@@ -431,8 +433,6 @@ variable "db_performance_retention_period" {
   default     = null
 }
 
-
-
 ## AD / IAM
 variable "db_domain" {
   description = "The ID of the Directory Service Active Directory domain to create the instance in."
@@ -525,7 +525,7 @@ variable "db_backup_retention_period" {
     condition     = var.db_backup_retention_period >= 0 && var.db_backup_retention_period <= 35
     error_message = "The db_backup_retention_period must be between 0 and 35."
   }
-  default = 0
+  default = 7
 }
 
 variable "db_backup_window" {
@@ -610,5 +610,11 @@ variable "rds_security_group_tag" {
 variable "create_security_group" {
   type        = bool
   description = "Flag that allows for the creation of a security group that allows access to the instance. Please use this for non-production use cases only."
+  default     = false
+}
+
+variable "create_subnet_group" {
+  type        = bool
+  description = "Flag that allows for the creation of a subnet group that allows public access."
   default     = false
 }
