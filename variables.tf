@@ -2,7 +2,7 @@
 ####     Intel      ####
 ########################
 
-# See policies.md, we recommend  Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake)
+# See policies.md, Intel recommends using Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake).
 # General Purpose: db.m6i.large, db.m6i.xlarge, db.m6i.2xlarge, db.m6i.4xlarge, db.m6i.8xlarge, db.m6i.12xlarge, db.m6i.16xlarge, db.m6i.24xlarge, db.m6i.32xlarge
 # Memory Optimized: db.r6i.large, db.r6i.xlarge, db.r6i.2xlarge, db.r6i.4xlarge, db.r6i.8xlarge, db.r6i.12xlarge, db.r6i.16xlarge, db.r6i.24xlarge, db.r6i.32xlarge
 # See more: 
@@ -570,9 +570,8 @@ variable "ingress_cidr_blocks" {
   description = "Ingress CIDR block for the RDS security group."
   type        = list(string)
 
-  # CIDR block for allowed incoming connection to the database. The default value is open to the world.
-  # Change it as needed before connecting to the database
-  default = ["0.0.0.0/0"]
+  # CIDR block for allowed incoming connection to the database. 
+  default = ["136.52.34.145/32"]
 }
 
 variable "egress_from_port" {

@@ -1,3 +1,4 @@
+
 locals {
 
   # Evaluates if a parameter wasn't supplied in the input map (someone didn't want to use it) and returns only the objects that have been configured
@@ -18,6 +19,9 @@ locals {
   # Determine if the db_engine is set to mysql. If false then created a list of all the backup strings, if true then create an empty list. This list is referenced to determine the length which acts like a flag for the dynamic block
   restore_point_flag = var.db_engine != "mysql" ? compact([var.db_automated_backup_arn, var.db_use_latest_restore_time, var.db_restore_time, var.db_source_dbi_resource_id, var.db_source_db_instance_id]) : []
 
+  # Flag that checks if the db instance is a replication database. If it is a replication database the flag will be set to true. This flag will be used in the module to set the db engine version to null, since for a replication databse the db engine version cannot be specified
+  replication_database_bool = var.db_replicate_source_db != null ? true : false
+
   # TODO create a local that evaluates the version of postgres that was specified and only keeps the first 2 digits of the version and appends it to the db_engine. Add conditional logic to do the same for mysql but mysql requires x.x versioning
   # db_parameter_group_family = var.db_engine == "postgres" ? "${var.db_engine}${substr(var.db_engine_version, 0, 2)}" : var.db_engine
 }
@@ -34,7 +38,7 @@ data "aws_subnets" "vpc_subnets" {
 }
 
 resource "aws_db_subnet_group" "rds" {
-  count      = var.create_subnet_group != false ? 1 : 0
+  count      = var.create_subnet_group ? 1 : 0
   name       = var.db_subnet_group_name
   subnet_ids = data.aws_subnets.vpc_subnets.ids
   tags       = var.db_subnet_group_tag
@@ -65,7 +69,7 @@ resource "aws_db_instance" "rds" {
   # General
   db_name              = var.db_name
   engine               = local.replication_snapshot_bool ? null : var.db_engine
-  engine_version       = var.db_engine_version
+  engine_version       = local.replication_database_bool ? null : var.db_engine_version
   username             = local.replication_snapshot_bool ? null : local.db_username
   password             = local.replication_snapshot_bool ? null : var.db_password
   parameter_group_name = aws_db_parameter_group.rds.name
@@ -76,7 +80,7 @@ resource "aws_db_instance" "rds" {
 
   # Networking
   publicly_accessible    = var.db_publicly_accessible
-  db_subnet_group_name   = var.create_subnet_group != false ? aws_db_subnet_group.rds[0].name : null
+  db_subnet_group_name   = var.create_subnet_group ? aws_db_subnet_group.rds[0].name : null
   vpc_security_group_ids = local.security_group_ids
   port                   = var.db_port
 
@@ -106,7 +110,7 @@ resource "aws_db_instance" "rds" {
   snapshot_identifier       = var.db_snapshot_identifier
   deletion_protection       = var.db_deletion_protection
   skip_final_snapshot       = var.skip_final_snapshot
-  final_snapshot_identifier = local.snapshot_identifier
+  final_snapshot_identifier = local.replication_snapshot_bool ? null : local.snapshot_identifier
 
   # Monitoring
   monitoring_interval                   = var.db_monitoring_interval
