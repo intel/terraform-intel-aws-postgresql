@@ -173,12 +173,6 @@ variable "db_parameters" {
   description = "Intel Cloud optimizations for Xeon processors"
 }
 
-variable "instance_class" {
-  type        = string
-  description = "Instance class that will be used by the RDS instance."
-  default     = "db.m6i.large"
-}
-
 ########################
 ####    Required    ####
 ########################
