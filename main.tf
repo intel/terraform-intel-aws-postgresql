@@ -1,3 +1,4 @@
+
 locals {
 
   # Evaluates if a parameter wasn't supplied in the input map (someone didn't want to use it) and returns only the objects that have been configured
@@ -34,7 +35,7 @@ data "aws_subnets" "vpc_subnets" {
 }
 
 resource "aws_db_subnet_group" "rds" {
-  count      = var.create_subnet_group != false ? 1 : 0
+  count      = var.create_subnet_group ? 1 : 0
   name       = var.db_subnet_group_name
   subnet_ids = data.aws_subnets.vpc_subnets.ids
   tags       = var.db_subnet_group_tag
@@ -76,7 +77,7 @@ resource "aws_db_instance" "rds" {
 
   # Networking
   publicly_accessible    = var.db_publicly_accessible
-  db_subnet_group_name   = var.create_subnet_group != false ? aws_db_subnet_group.rds[0].name : null
+  db_subnet_group_name   = var.create_subnet_group ? aws_db_subnet_group.rds[0].name : null
   vpc_security_group_ids = local.security_group_ids
   port                   = var.db_port
 
@@ -106,7 +107,7 @@ resource "aws_db_instance" "rds" {
   snapshot_identifier       = var.db_snapshot_identifier
   deletion_protection       = var.db_deletion_protection
   skip_final_snapshot       = var.skip_final_snapshot
-  final_snapshot_identifier = local.snapshot_identifier
+  final_snapshot_identifier = local.replication_snapshot_bool ? null : local.snapshot_identifier
 
   # Monitoring
   monitoring_interval                   = var.db_monitoring_interval
