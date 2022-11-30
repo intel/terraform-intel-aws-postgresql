@@ -4,7 +4,7 @@
 # availability zone than the primary database server
 
 module "optimized-postgres-server" {
-  source         = "../../"
+  source         = "github.com/intel/terraform-intel-aws-postgresql"
   rds_identifier = "postgres-dev"
   db_password    = var.db_password
 
@@ -15,7 +15,7 @@ module "optimized-postgres-server" {
 }
 
 module "optimized-postgres-server-read-replica" {
-  source                           = "../../"
+  source                           = "github.com/intel/terraform-intel-aws-postgresql"
   rds_identifier                   = "postgres-dev-replica"
   db_password                      = var.db_password
 
