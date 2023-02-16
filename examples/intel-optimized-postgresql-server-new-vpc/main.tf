@@ -27,7 +27,7 @@ data "aws_subnets" "vpc_subnets" {
 }
 
 module "optimized-postgres-server" {
-  source         = "github.com/intel/terraform-intel-aws-postgresql"
+  source         = "intel/terraform-intel-aws-postgresql"
   rds_identifier = "postgres-dev"
   db_password    = var.db_password
   create_security_group = true
