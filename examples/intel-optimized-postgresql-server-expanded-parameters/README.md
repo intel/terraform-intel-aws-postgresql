@@ -38,7 +38,7 @@ main.tf
 
 ```hcl
 module "optimized-postgres-server" {
-  source                     = "intel/terraform-intel-aws-postgresql"
+  source                     = ""intel/aws-postgresql/intel""
   create_security_group      = true
   rds_identifier             = "postgres-dev"
   db_password                = var.db_password

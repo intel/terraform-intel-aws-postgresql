@@ -2,9 +2,9 @@
 # terraform apply -var="db_password=..." -var="vpc_id=..."
 # Environment variables can also be used https://www.terraform.io/language/values/variables#environment-variables
 
-variable "vpc_id"{
+variable "vpc_id" {
   description = "id of the vpc"
-  type = string
+  type        = string
 }
 
 variable "db_password" {
@@ -14,6 +14,6 @@ variable "db_password" {
 # Provision Intel Optimized AWS PostgreSQL server 
 module "optimized-postgresql-server" {
   source      = "intel/terraform-intel-aws-postgresql"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
   db_password = var.db_password
 }

@@ -1,20 +1,20 @@
 resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
   name   = "tf-postgresql-parameter-group"
   family = "postgres13"
-  
+
   parameter {
-    name  = "max_connections"
-    value = 256
+    name         = "max_connections"
+    value        = 256
     apply_method = "pending-reboot"
   }
   parameter {
-    name  = "huge_pages"
-    value = "on"
+    name         = "huge_pages"
+    value        = "on"
     apply_method = "pending-reboot"
   }
   parameter {
-    name  = "shared_buffers"
-    value = "{DBInstanceClassMemory*3/32768}"
+    name         = "shared_buffers"
+    value        = "{DBInstanceClassMemory*3/32768}"
     apply_method = "pending-reboot"
   }
   parameter {
@@ -23,7 +23,7 @@ resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
   }
   parameter {
     name  = "work_mem"
-    value = 4096 *1024
+    value = 4096 * 1024
   }
   parameter {
     name  = "maintenance_work_mem"
@@ -38,8 +38,8 @@ resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
     value = 7 * 1024
   }
   parameter {
-    name  = "max_files_per_process"
-    value = 4000
+    name         = "max_files_per_process"
+    value        = 4000
     apply_method = "pending-reboot"
   }
   parameter {
@@ -47,8 +47,8 @@ resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
     value = 32
   }
   parameter {
-    name  = "max_worker_processes"
-    value = "{DBInstanceVCPU}"
+    name         = "max_worker_processes"
+    value        = "{DBInstanceVCPU}"
     apply_method = "pending-reboot"
   }
   parameter {
@@ -56,13 +56,13 @@ resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
     value = "off"
   }
   parameter {
-    name  = "wal_buffers"
-    value = -1
+    name         = "wal_buffers"
+    value        = -1
     apply_method = "pending-reboot"
   }
   parameter {
-    name  = "max_wal_senders"
-    value = 5
+    name         = "max_wal_senders"
+    value        = 5
     apply_method = "pending-reboot"
   }
   parameter {
@@ -70,13 +70,13 @@ resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
     value = "UTC"
   }
   parameter {
-    name  = "max_locks_per_transaction"
-    value = 64
+    name         = "max_locks_per_transaction"
+    value        = 64
     apply_method = "pending-reboot"
   }
   parameter {
-    name  = "max_pred_locks_per_transaction"
-    value = 64
+    name         = "max_pred_locks_per_transaction"
+    value        = 64
     apply_method = "pending-reboot"
   }
   parameter {
@@ -112,13 +112,13 @@ resource "aws_db_parameter_group" "tf-postgresql-parameter-group" {
     value = 1
   }
   parameter {
-    name  = "autovacuum_max_workers"
-    value = 10
+    name         = "autovacuum_max_workers"
+    value        = 10
     apply_method = "pending-reboot"
   }
   parameter {
-    name  = "autovacuum_freeze_max_age"
-    value = 750000000
+    name         = "autovacuum_freeze_max_age"
+    value        = 750000000
     apply_method = "pending-reboot"
   }
   parameter {

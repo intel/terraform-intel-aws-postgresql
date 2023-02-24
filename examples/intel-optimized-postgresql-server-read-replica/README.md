@@ -39,7 +39,7 @@ main.tf
 
 ```hcl
 module "optimized-postgres-server" {
-  source         = "github.com/intel/terraform-intel-aws-postgresql"
+  source         = "intel/aws-postgresql/intel"
   rds_identifier = "postgres-dev"
   db_password    = var.db_password
 
@@ -50,7 +50,7 @@ module "optimized-postgres-server" {
 }
 
 module "optimized-postgres-server-read-replica" {
-  source                           = "github.com/intel/terraform-intel-aws-postgresql"
+  source                           = "intel/aws-postgresql/intel"
   rds_identifier                   = "postgres-dev-replica"
   db_password                      = var.db_password
 
