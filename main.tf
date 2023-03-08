@@ -60,7 +60,7 @@ resource "aws_db_parameter_group" "rds" {
 }
 
 resource "aws_db_instance" "rds" {
-  identifier     = var.aws_database_instance_identifier
+  identifier     = var.rds_identifier
   instance_class = var.instance_class
 
   # General
