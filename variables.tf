@@ -227,12 +227,6 @@ variable "db_parameter_group_family" {
   default     = "postgres14"
 }
 
-variable "aws_database_instance_identifier" {
-  description = "Identifier for the AWS database instance."
-  type        = string
-  default     = "postgresql"
-}
-
 variable "db_name" {
   description = "Name of the database that will be created on the RDS instance. If this is specified then a database will be created as a part of the instance provisioning process."
   type        = string

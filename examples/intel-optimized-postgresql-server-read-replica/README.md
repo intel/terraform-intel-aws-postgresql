@@ -1,4 +1,88 @@
-# intel-optimized-postgresql-server
+<p align="center">
+  <img src="https://github.com/intel/terraform-intel-aws-postgresql/blob/main/images/logo-classicblue-800px.png?raw=true" alt="Intel Logo" width="250"/>
+</p>
+
+# Intel® Cloud Optimization Modules for Terraform
+
+© Copyright 2022, Intel Corporation
+
+## AWS RDS PostgreSQL module - Read Replica Example
+
+This example creates an Intel optimized Amazon RDS PostgreSQL Server database instance and creates a read replica in the us-east-1 region. The instance is created on an Intel Icelake instance M6i.xlarge by default. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this module is to get you started with a database configured to run best on Intel architecture.
+
+As you configure your application's environment, choose the configurations for your infrastructure that matches your application's requirements.
+
+The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https://www.intel.com/content/www/us/en/developer/articles/guide/open-source-database-tuning-guide-on-xeon-systems.html>)
+
+
+## Usage
+
+By default, you will only have to pass three variables
+
+```hcl
+db_password
+rds_identifier
+vpc_id
+```
+
+variables.tf
+
+```hcl
+variable "db_password" {
+  description = "Password for the master database user."
+  type        = string
+  sensitive   = true
+}
+```
+
+main.tf
+
+```hcl
+module "optimized-postgres-server" {
+  source         = "intel/aws-postgresql/intel"
+  rds_identifier = "postgres-dev"
+  db_password    = var.db_password
+
+  # Update the vpc_id below for the VPC that this module will use. Find the default vpc-id in your AWS account
+  # from the AWS console or using CLI commands. In your AWS account, the vpc-id is represented as "vpc-",
+  # followed by a set of alphanumeric characters. One sample representation of a vpc-id is vpc-0a6734z932p20c2m4
+  vpc_id         = "<YOUR-VPC-ID-HERE>"
+}
+
+module "optimized-postgres-server-read-replica" {
+  source                           = "intel/aws-postgresql/intel"
+  rds_identifier                   = "postgres-dev-replica"
+  db_password                      = var.db_password
+
+  # Update the vpc-id below. Use the same vpc-id as the one used in the prior module.
+  vpc_id                           = "<YOUR-VPC-ID-HERE>"
+  aws_database_instance_identifier = "postgresql-rr"
+  db_replicate_source_db           = module.optimized-postgres-server.db_instance_id
+  kms_key_id                       = module.optimized-postgres-server.db_kms_key_id
+  skip_final_snapshot              = true
+}
+```
+
+Run Terraform
+
+```hcl
+export TF_VAR_db_password ='<USE_A_STRONG_PASSWORD>'
+
+terraform init  
+terraform plan
+terraform apply 
+```
+
+Note that this example may create resources. Run `terraform destroy` when you don't need these resources.
+
+## Considerations
+
+- Check in the variables.tf file for the region where this database instance will be created. It is defaulted to run in us-east-1 region within AWS. If you want to run it within any other region, make changes accordingly within the Terraform code
+
+- Check the variables.tf file for incoming ports allowed to connect to the database instance. The variable name is ingress_cidr_blocks. Currently it is defaulted to be open to the world like 0.0.0.0/0. Before runing the code, configure it based on specific security policies and requirements within the environment it is being implemented
+
+- Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
+
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements

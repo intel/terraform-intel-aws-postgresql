@@ -13,7 +13,7 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 
   tags = {
-    Terraform = "true"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
@@ -27,11 +27,11 @@ data "aws_subnets" "vpc_subnets" {
 }
 
 module "optimized-postgres-server" {
-  source         = "github.com/intel/terraform-intel-aws-postgresql"
-  rds_identifier = "postgres-dev"
-  db_password    = var.db_password
+  source                = "intel/aws-postgresql/intel"
+  rds_identifier        = "postgres-dev"
+  db_password           = var.db_password
   create_security_group = true
-  create_subnet_group = true
+  create_subnet_group   = true
 
   # The vpc-id for the database server will be referenced based on the new VPC being created from the prior module
   vpc_id = module.vpc.vpc_id

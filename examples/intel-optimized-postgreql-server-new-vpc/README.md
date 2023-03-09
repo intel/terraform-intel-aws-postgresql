@@ -6,9 +6,9 @@
 
 © Copyright 2022, Intel Corporation
 
-## AWS RDS PostgreSQL module - Expanded Parameters Example
+## AWS RDS PostgreSQL module - New VPC Example
 
-This example creates an Intel optimized Amazon RDS PostgreSQL Server database instance and optimizes the database parameters. The instance is created on an Intel Icelake instance M6i.xlarge by default. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this module is to get you started with a database configured to run best on Intel architecture.
+This example creates an Intel optimized Amazon RDS PostgreSQL Server database instance and creates a new VPC. The instance is created on an Intel Icelake instance M6i.xlarge by default. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this module is to get you started with a database configured to run best on Intel architecture.
 
 As you configure your application's environment, choose the configurations for your infrastructure that matches your application's requirements.
 
@@ -37,32 +37,39 @@ variable "db_password" {
 main.tf
 
 ```hcl
-module "optimized-postgres-server" {
-  source                     = "intel/aws-postgresql/intel"
-  create_security_group      = true
-  rds_identifier             = "postgres-dev"
-  db_password                = var.db_password
-  db_allocated_storage       = 200
-  db_max_allocated_storage   = 8000
-  db_backup_retention_period = 3
-  db_encryption              = true
-  db_cloudwatch_logs_export  = ["postgresql", "upgrade"]
-  db_tags                    = {
-                    "database" = "test"
-  }
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~>3.18.1"
 
-  db_parameters              = {
-                      postgres = {
-                        autovacuum = {
-                          apply_method = "immediate"
-                          value        = "1"
-                        }
-                      }
+  name = "my-vpc"
+  cidr = "10.0.0.0/16"
+
+  azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+
+  tags = {
+    Terraform = "true"
+    Environment = "dev"
   }
-  # Update the vpc_id below for the VPC that this module will use. Find the default vpc-id in your AWS account
-  # from the AWS console or using CLI commands. In your AWS account, the vpc-id is represented as "vpc-",
-  # followed by a set of alphanumeric characters. One sample representation of a vpc-id is vpc-0a6734z932p20c2m4
-  vpc_id                     = "<YOUR-VPC-ID-HERE>"
+}
+
+# Identifying subnets from the vpc created above. The subnets will be used to create the aws_db_subnet_group for the database resource
+data "aws_subnets" "vpc_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [module.vpc.vpc_id]
+  }
+}
+
+module "optimized-postgres-server" {
+  source         = "intel/terraform-intel-aws-postgresql"
+  rds_identifier = "postgres-dev"
+  db_password    = var.db_password
+  create_security_group = true
+  create_subnet_group = true
+
+  # The vpc-id for the database server will be referenced based on the new VPC being created from the prior module
+  vpc_id = module.vpc.vpc_id
 }
 ```
 
