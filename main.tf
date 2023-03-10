@@ -25,7 +25,6 @@ locals {
 
 resource "random_id" "rid" {
   byte_length = 5
-  special = false
 }
 
 data "aws_subnets" "vpc_subnets" {
