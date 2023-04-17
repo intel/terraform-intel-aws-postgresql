@@ -64,6 +64,9 @@ Note that this example may create resources. Run `terraform destroy` when you do
 
 - Check if you getting errors while running this Terraform code due to AWS defined soft limits or hard limits within your AWS account. Please work with your AWS support team to resolve limit constraints
 
+- Using HashiCorp Modules alongside green-blue deployment allows for a secure and efficient deployment process. The modules can be easily integrated into both the active and inactive environments, ensuring consistency across both environments.
+   - Instance - If you apply the instances will shut down immediately and restart, creating service interruption.
+   - Platform - If you apply, it will wait for the next maintenance window to change the instance & configuration. You can force apply with additional TF code.
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
