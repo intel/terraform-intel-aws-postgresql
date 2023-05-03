@@ -52,7 +52,7 @@ variable "db_parameters" {
         apply_method = optional(string, "immediate")
       }))
       max_wal_size = optional(object({
-        value        = optional(string, "512")
+        value        = optional(string, "49152")
         apply_method = optional(string, "immediate")
       }))
       checkpoint_warning = optional(object({
@@ -92,7 +92,7 @@ variable "db_parameters" {
         apply_method = optional(string, "pending-reboot")
       }))
       shared_buffers = optional(object({
-        value        = optional(string, "{DBInstanceClassMemory*3/32768}")
+        value        = optional(string, "{DBInstanceClassMemory/32768}")
         apply_method = optional(string, "pending-reboot")
       }))
       max_files_per_process = optional(object({
