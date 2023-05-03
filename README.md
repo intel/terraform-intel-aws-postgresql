@@ -17,7 +17,7 @@ The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https:/
 
 <center>
 
-#### [Handle up to 1.54x more PostgreSQL queries/second AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake)](https://community.intel.com/t5/Blogs/Tech-Innovation/Cloud/Comparing-Amazon-RDS-performance-between-Intel-Graviton/post/1471648?source=MessageSyndication)
+#### [Handle up to 1.54x more PostgreSQL queries/second using AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake)](https://community.intel.com/t5/Blogs/Tech-Innovation/Cloud/Comparing-Amazon-RDS-performance-between-Intel-Graviton/post/1471648?source=MessageSyndication)
 
 <p align="center">
   <a href="https://community.intel.com/t5/Blogs/Tech-Innovation/Cloud/Comparing-Amazon-RDS-performance-between-Intel-Graviton/post/1471648?source=MessageSyndication">
@@ -27,7 +27,7 @@ The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https:/
 
 #
 
-#### [Process up to 1.44x more PostgreSQL transactions on AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake) vs. previous generation](https://www.intel.com/content/www/us/en/content-details/753212/support-up-to-44-more-postgresql-new-orders-per-minute-on-aws-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html)
+#### [Process up to 1.43x more PostgreSQL transactions on AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake) vs. previous generation](https://www.intel.com/content/www/us/en/content-details/753212/support-up-to-44-more-postgresql-new-orders-per-minute-on-aws-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html)
 
 <p align="center">
   <a href="https://www.intel.com/content/www/us/en/content-details/753212/support-up-to-44-more-postgresql-new-orders-per-minute-on-aws-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html">
