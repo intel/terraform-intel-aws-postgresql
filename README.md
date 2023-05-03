@@ -13,6 +13,40 @@ Instance selection and PostgreSQL optimization are included by default in the co
 
 The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https://www.intel.com/content/www/us/en/developer/articles/guide/open-source-database-tuning-guide-on-xeon-systems.html>)
 
+## Performance Data
+
+<center>
+
+#### [Handle up to 1.54x more PostgreSQL queries/second AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake)](https://community.intel.com/t5/Blogs/Tech-Innovation/Cloud/Comparing-Amazon-RDS-performance-between-Intel-Graviton/post/1471648?source=MessageSyndication)
+
+<p align="center">
+  <a href="https://community.intel.com/t5/Blogs/Tech-Innovation/Cloud/Comparing-Amazon-RDS-performance-between-Intel-Graviton/post/1471648?source=MessageSyndication">
+  <img src="https://github.com/intel/terraform-intel-aws-postgresql/blob/main/images/aws-postgresql-1.png?raw=true" alt="Link" width="600"/>
+  </a>
+</p>
+
+#
+
+#### [Process up to 1.44x more PostgreSQL transactions on AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake) vs. previous generation](https://www.intel.com/content/www/us/en/content-details/753212/support-up-to-44-more-postgresql-new-orders-per-minute-on-aws-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html)
+
+<p align="center">
+  <a href="https://www.intel.com/content/www/us/en/content-details/753212/support-up-to-44-more-postgresql-new-orders-per-minute-on-aws-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html">
+  <img src="https://github.com/intel/terraform-intel-aws-postgresql/blob/main/images/aws-postgresql-2.png?raw=true" alt="Link" width="600"/>
+  </a>
+</p>
+
+#
+
+#### [Achieve up to 1.24x better PostgreSQL performance by choosing AWS m6i instances featuring 3rd Generation Intel® Xeon® Scalable Processor (Ice Lake)](https://www.intel.com/content/www/us/en/content-details/755507/achieve-better-postgresql-performance-by-choosing-aws-ec2-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html)
+
+<p align="center">
+  <a href="https://www.intel.com/content/www/us/en/content-details/755507/achieve-better-postgresql-performance-by-choosing-aws-ec2-m6i-instances-featuring-3rd-gen-intel-xeon-scalable-processors.html">
+  <img src="https://github.com/intel/terraform-intel-aws-postgresql/blob/main/images/aws-postgresql-3.png?raw=true" alt="Link" width="600"/>
+  </a>
+</p>
+
+</center>
+
 ## Usage
 
 **See examples folder for complete examples.**
