@@ -11,7 +11,7 @@
 This module can be used to deploy an Intel optimized Amazon RDS PostgreSQL Server database instance.
 Instance selection and PostgreSQL optimization are included by default in the code.
 
-The PostgreSQL Optimizations were based off [Intel Xeon Tunning guides](<https://www.intel.com/content/www/us/en/developer/articles/guide/open-source-database-tuning-guide-on-xeon-systems.html>)
+The PostgreSQL Optimizations were based off [Intel Xeon Tuning guides](<https://www.intel.com/content/www/us/en/developer/articles/guide/open-source-database-tuning-guide-on-xeon-systems.html>)
 
 ## Performance Data
 
