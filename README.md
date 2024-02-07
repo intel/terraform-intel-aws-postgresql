@@ -2,9 +2,9 @@
   <img src="https://github.com/intel/terraform-intel-aws-postgresql/blob/main/images/logo-classicblue-800px.png?raw=true" alt="Intel Logo" width="250"/>
 </p>
 
-# Intel® Cloud Optimization Modules for Terraform
+# Intel® Optimized Cloud Modules for Terraform
 
-© Copyright 2023, Intel Corporation
+© Copyright 2024, Intel Corporation
 
 ## AWS RDS PostgreSQL module
 
