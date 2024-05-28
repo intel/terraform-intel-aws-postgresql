@@ -2,46 +2,23 @@
   <img src="./images/logo-classicblue-800px.png" alt="Intel Logo" width="250"/>
 </p>
 
-# Intel® Cloud Optimization Modules for Terraform  
+# Intel® Optimized Cloud Modules for Terraform  
 
-© Copyright 2022, Intel Corporation
+© Copyright 2024, Intel Corporation
 
 ## HashiCorp Sentinel Policies
 
-This file documents the HashiCorp Sentinel policies that apply to this module
+<b>What are Sentinel Policies?</b>
 
-## Policy 1
+HashiCorp Sentinel is a policy as code framework that can be used to enforce policies and standards across an organization's infrastructure. It allows organizations to define rules for their infrastructure using a high-level language, and integrates with a variety of HashiCorp tools, including Terraform and Vault. Sentinel policies are defined using the Sentinel language, and can be used to enforce rules such as compliance requirements, security best practices, and cost optimization. Sentinel policies can be implemented at different stages of the infrastructure development lifecycle, deployment, and runtime.
 
-Description: Intel Xeon 3rd Generation Scalable processors (code-named Ice Lake) should be used
+## Intel's Sentinel Policy Structure
 
-Resource type: aws_db_instance
+Reference the `<b>intel-policy-library</b>` [README.md](https://github.com/intel/intel-policy-library/blob/main/README.md#getting-started) for details on how to get started using our policies.
 
-Parameter: instance_class
+Intel® provides a list of `optimal` instance types per cloud resource, selected to deliver the best possible performance, security, and cost-efficiency for your cloud workloads. What sets this library apart is its dynamic nature; it is designed to automatically update, informing developers whenever more suitable hardware becomes available within their cloud environment, enabling them to make timely and informed decisions.
 
-Allowed Types
-
-- **General Purpose:** db.m6i.large, db.m6i.xlarge, db.m6i.2xlarge, db.m6i.4xlarge, db.m6i.8xlarge, db.m6i.12xlarge, db.m6i.16xlarge, db.m6i.24xlarge, db.m6i.32xlarge
-- **Memory Optimized:** db.r6i.large, db.r6i.xlarge, db.r6i.2xlarge, db.r6i.4xlarge, db.r6i.8xlarge, db.r6i.12xlarge, db.r6i.16xlarge, db.r6i.24xlarge, db.r6i.32xlarge
-
-## Policy 2  
-
-Description: Provisioned IOPS SSD (io1) volumes should be used for enhanced performance
-
-Resource type: aws_db_instance
-
-Parameter: storage_type
-
-Allowed Type: io1
-
-## Policy 3  
-
-Description: Database storage encryption should be used
-
-Resource type: aws_db_instance
-
-Parameter: storage_encrypted
-
-Allowed Type: true
+This library also contains `recommended` instance types for AI and Confidential Computing workloads. For more information regarding Intel's AI and Confidential Computing capabilities and policies see the Intel® Xeon® Scalable Processors and Intel® Advanced Matrix Extensions (AMX) and Intel® Xeon® Scalable Processors and Confidential Computing sections in the [intel-policy-library](https://github.com/intel/intel-policy-library)
 
 ## Links
 
