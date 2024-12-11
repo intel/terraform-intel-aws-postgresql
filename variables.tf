@@ -13,7 +13,7 @@
 variable "instance_class" {
   type        = string
   description = "Instance class that will be used by the RDS instance."
-  default     = "db.m6i.2xlarge"
+  default     = "db.m7i.2xlarge"
 }
 
 variable "db_parameters" {
@@ -249,7 +249,7 @@ variable "db_port" {
 variable "db_engine_version" {
   description = "Database engine version for AWS database instance."
   type        = string
-  default     = "14.5"
+  default     = "14.9"
 }
 
 variable "db_engine" {
