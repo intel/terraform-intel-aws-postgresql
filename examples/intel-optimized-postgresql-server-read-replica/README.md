@@ -8,7 +8,7 @@
 
 ## AWS RDS PostgreSQL module - Read Replica Example
 
-This example creates an Intel optimized Amazon RDS PostgreSQL Server database instance and creates a read replica in the us-east-1 region. The instance is created on an Intel Icelake instance M6i.xlarge by default. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this module is to get you started with a database configured to run best on Intel architecture.
+This example creates an Intel optimized Amazon RDS PostgreSQL Server database instance and creates a read replica in the us-east-1 region. The instance is on an Intel Sapphire Rapids db.m7i.2xlarge by default. The instance is pre-configured with parameters within the database parameter group that is optimized for Intel architecture. The goal of this module is to get you started with a database configured to run best on Intel architecture.
 
 As you configure your application's environment, choose the configurations for your infrastructure that matches your application's requirements.
 
