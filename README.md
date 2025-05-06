@@ -105,15 +105,6 @@ No modules.
 
 ## Resources
 
-## Links
-
-<https://aws.amazon.com/ec2/instance-types/m6i/>
-
-<https://aws.amazon.com/ec2/instance-types/r6i/>
-
-<https://aws.amazon.com/rds/postgresql/pricing/>
-
-
 | Name | Type |
 |------|------|
 | [aws_db_instance.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
